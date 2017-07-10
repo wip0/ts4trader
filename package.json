@@ -1,0 +1,23 @@
+{
+  "name": "ts4trader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wip0/ts4trader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wip0/ts4trader/issues"
+  },
+  "homepage": "https://github.com/wip0/ts4trader#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.9",
+    "typescript": "2.4.1"
+  }
+}
