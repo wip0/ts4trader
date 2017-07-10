@@ -3,11 +3,18 @@ import * as path from 'path';
 
 // Read data from file
 const INPUT_FILE = './input/data.json';
-let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
-let data: any = fs.readFileSync(fullPathFile, 'utf-8');
+let fullPathFile: string = path.resolve(process.cwd(), INPUT_FILE);
 
-// print data
-console.log(data);
+try {
+    let text = fs.readFileSync(fullPathFile, 'utf-8');
+    let data: any = JSON.parse(text);
+    
+    // print data
+    //console.log(data);
 
+    console.log(`We have ${data.name} in our portfolio.` );
 
-
+    // todo: Calculate profit/loss from data
+} catch (error) {
+    console.error(error);
+}
