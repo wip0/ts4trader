@@ -17,14 +17,10 @@ try {
     console.log(`We have ${numStock} stocks in our portfolio.` );
 
     // todo: Calculate profit/loss of our portfolio
-    var profit = 0;
     for (let i = 0; i < numStock; ++i) {
         let stock = stocks[i];
-        profit += (stock.price - stock.cost)*stock.amount;
-        //console.log('P/L per stock is ' + (stock.price - stock.cost)*stock.amount);
         // console.log(stock);
     }
-        console.log('Total profit/Loss is ' + profit) ;
 } catch (error) {
     console.error(error);
 }
