@@ -1,6 +1,23 @@
 {
-    "name": "GOOG.O",
-    "cost": 110.5,
-    "amount": 1000,
-    "price": 123
+    "stocks": [
+        {
+            "name": "GOOG.O",
+            "cost": 110.5,
+            "amount": 1000,
+            "price": 123
+        },
+        {
+            "name": "FB.O",
+            "cost": 200,
+            "amount": 4000,
+            "price": 197.5
+        },
+        {
+            "name": "MSFT.O",
+            "cost": 175,
+            "amount": 2000,
+            "price": 176
+        }        
+    ]
+
 }

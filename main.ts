@@ -12,9 +12,15 @@ try {
     // print data
     //console.log(data);
 
-    console.log(`We have ${data.name} in our portfolio.` );
+    let stocks: any[] = data.stocks;
+    let numStock: number = stocks.length; 
+    console.log(`We have ${numStock} stocks in our portfolio.` );
 
-    // todo: Calculate profit/loss from data
+    // todo: Calculate profit/loss of our portfolio
+    for (let i = 0; i < numStock; ++i) {
+        let stock = stocks[i];
+        // console.log(stock);
+    }
 } catch (error) {
     console.error(error);
 }
