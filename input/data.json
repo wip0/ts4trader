@@ -18,6 +18,24 @@
             "amount": 2000,
             "price": 176
         }        
+    ],
+    "fxs": [
+        {
+            "name": "JPY=",
+            "action": "long",
+            "cost": 98.350,
+            "lot": 0.7,
+            "bid": 98.445,
+            "ask": 98.470
+        },
+        {
+            "name": "EUR=",
+            "action": "short",
+            "cost": 0.9984,
+            "lot": 0.5,
+            "bid": 0.9978,
+            "ask": 0.9991
+        }
     ]
 
 }
