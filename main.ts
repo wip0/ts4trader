@@ -20,13 +20,25 @@ interface Fx {
 function calculateFromStock(stocks: Stock[]): number {
     let net: number = 0;
     for (let stock of stocks) {
-        // todo: Calculate profit/loss
+        net += (stock.price-stock.cost)*stock.amount;    // todo: Calculate profit/loss
     }
     return net;
 }
 
-// todo: Add a new function to calculate from Fx
+function calculateFromFx(fxs: Fx): any {
+    let fxnet: number = 0;
 
+    switch(fxs.action) {
+        case "long":{
+            fxnet += (fxs.bid - fxs.cost)*fxs.amount;
+            break;
+        }
+        case "short":{
+            fxnet += (fxs.cost - fxs.ask)*fxs.amount;
+            break;
+        }
+    } // todo: Add a new function to calculate from Fx
+    return fxnet;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Read data from file
 const INPUT_FILE = './input/data.json';
@@ -37,14 +49,16 @@ try {
     let data: any = JSON.parse(text);
     
     // print data
-    //console.log(data);
+    console.log(data);//console.log(data);
 
     let stocks: Stock[] = <Stock[]> data.stocks;
     let fxs: Fx[] = <Fx[]> data.fxs;
 
     // todo: Calculate profit/loss of our portfolio
-    // calculateFromStock(stocks);
+   console.log(calculateFromStock(stocks));
+
 
 } catch (error) {
     console.error(error);
+}
 }
