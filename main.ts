@@ -1,5 +1,6 @@
 import * as path from 'path';
-import {Portfolio, Stock} from './lib/portfolio';
+import {Portfolio} from './lib/portfolio';
+import {Stock} from './lib/asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const INPUT_FILE = './input/data.json';
 let fullPathFile: string = path.resolve(process.cwd(), INPUT_FILE);
