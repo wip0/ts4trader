@@ -10,17 +10,21 @@ try {
     let data: any = JSON.parse(text);
     
     // print data
+    console.log('print data');
     //console.log(data);
+    console.log(data); 
 
     let stocks: any[] = data.stocks;
     let numStock: number = stocks.length; 
     console.log(`We have ${numStock} stocks in our portfolio.` );
 
     // todo: Calculate profit/loss of our portfolio
+    var profit =0;
     for (let i = 0; i < numStock; ++i) {
         let stock = stocks[i];
-        // console.log(stock);
+        profit += (stock.price - stock.cost)*stock.amount;// console.log(stock);
     }
+    console.log('Total P/L is ' + profit);
 } catch (error) {
     console.error(error);
 }
