@@ -1,12 +1,24 @@
 import * as fs from 'fs';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-interface Stock {
-    name: string;
-    cost: number;
-    amount: number;
-    price: number;
-}
+export class Stock {
+    public name: string;
+    public cost: number;
+    public amount: number;
+    public price: number;
 
+    constructor(name: string, cost: number, amount: number, price: number) {
+        this.name = name;
+        this.cost = cost;
+        this.amount = amount;
+        this.price = price;
+    }
+
+    public getWorth(): number {
+        // todo:
+        return 0;
+    }
+}
+// todo: change interface Fx to class Fx 
 interface Fx {
     name: string;
     action: string;
@@ -15,7 +27,7 @@ interface Fx {
     bid: number;
     ask: number;
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Portfolio {
     private stocks: Stock[];
     private fxs: Fx[];
@@ -42,13 +54,7 @@ export class Portfolio {
         let keys: string[] = Object.keys(data);
         for (let key of keys) {
             let obj: any = data[key];
-            let stock: Stock = {
-                name: key,
-                cost: obj.cost,
-                amount: obj.amount,
-                price: obj.price,
-            };
-
+            let stock: Stock = new Stock(key, obj.cost, obj.amount, obj.price);
             stocks.push(stock);
         }
 
@@ -63,12 +69,24 @@ export class Portfolio {
     }
 
     private getStockWorth(): number {
-        // todo: 
-        return 0;
+        let sum = 0;
+        for (let stock of this.stocks) {
+            sum += stock.getWorth();
+        }
+        return sum;
     }
 
     private getFxWorth(): number {
         // todo:
         return 0;
+    }
+
+    public getTheMostPositionInStock(): Stock | null {
+        if (this.stocks.length === 0) {
+            return null;
+        }
+
+        // todo:
+        return null;
     }
 }
