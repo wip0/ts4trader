@@ -10,11 +10,11 @@ try {
     let data: any = JSON.parse(text);
     
     // print data
-    //console.log(data);
+    console.log(data);//console.log(data);
 
     console.log(`We have ${data.name} in our portfolio.` );
 
-    // todo: Calculate profit/loss from data
+    console.log('Portfolio P/L is ' + (data.price - data.cost)*data.amount);// todo: Calculate profit/loss from data
 } catch (error) {
     console.error(error);
 }
