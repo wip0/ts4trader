@@ -1,50 +1,18 @@
-import * as fs from 'fs';
 import * as path from 'path';
+import {Portfolio} from './lib/portfolio';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-interface Stock {
-    name: string;
-    cost: number;
-    amount: number;
-    price: number;
-}
-
-interface Fx {
-    name: string;
-    action: string;
-    cost: number;
-    amount: number;
-    bid: number;
-    ask: number;
-}
-
-function calculateFromStock(stocks: Stock[]): number {
-    let net: number = 0;
-    for (let stock of stocks) {
-        // todo: Calculate profit/loss
-    }
-    return net;
-}
-
-// todo: Add a new function to calculate from Fx
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Read data from file
 const INPUT_FILE = './input/data.json';
 let fullPathFile: string = path.resolve(process.cwd(), INPUT_FILE);
 
-try {
-    let text = fs.readFileSync(fullPathFile, 'utf-8');
-    let data: any = JSON.parse(text);
-    
-    // print data
-    //console.log(data);
+main();
+////////////////////////////////////////////////////////////////////////////////////////////////////
+function main() {
+    let portfolio: Portfolio = new Portfolio();
+    if (!portfolio.loadFromFile(fullPathFile)) {
+        console.log(`Cannot load from file: ${fullPathFile}`);
+        return;
+    }
 
-    let stocks: Stock[] = <Stock[]> data.stocks;
-    let fxs: Fx[] = <Fx[]> data.fxs;
-
-    // todo: Calculate profit/loss of our portfolio
-    // calculateFromStock(stocks);
-
-} catch (error) {
-    console.error(error);
+    let value: number = portfolio.getNetWorth();
+    console.log(`Net worth: ${value}`);
 }
