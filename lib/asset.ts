@@ -8,6 +8,19 @@ export interface Asset {
 
     getWorth(): number;
 }
+
+export class AssetFactory {
+    public static create(data: any | null): Asset | null {
+        let assetType = data && data.type;
+        if (assetType === 'Stock') {
+            return <Asset> new Stock(data.name, data.cost, data.amount, data.price);
+        } else if (assetType === 'Fx') {
+            // todo:
+        }
+
+        return null;
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Stock implements Asset {
     public type: AssetType;

@@ -1,48 +1,48 @@
 import * as fs from 'fs';
-import {Asset, Stock, Fx} from './asset';
+const jsonminify = require('jsonminify');       // use require for old module
+
+import {Asset, AssetFactory, Stock, Fx} from './asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Portfolio {
+    public cash: number;        // try: change public to private and see what's happen
     private assets: Asset[];
 
     constructor() {
+        this.cash = 0;
         this.assets = [];
     }
 
     public loadFromFile(fileName: string, encoding: string = 'utf-8'): boolean {
         let bOK: boolean = true;
         try {
-            let data: any = JSON.parse(fs.readFileSync(fileName, encoding));
-            let stocks: Stock[] = this.loadStock(data.stock);
-            this.assets.push(...stocks);
-            // todo: load fx 
+            let text: string = fs.readFileSync(fileName, encoding);
+            let data: any = JSON.parse(jsonminify(text));
+
+            this.cash = data.cash || 0; // default is 0
+            
+            this.assets = [];
+            let assets: any[] = data.assets || [];
+            if (Array.isArray(assets)) {    // check data before creating
+                assets.forEach((asset) => { // try: change to for-of
+                    let obj = AssetFactory.create(asset);
+                    if (obj != null) {
+                        this.assets.push(obj);
+                    }
+                });
+            }
         } catch (error) {
             bOK = false;
         }
         return bOK;        
     }
 
-    private loadStock(data: any): Stock[] {
-        let stocks: Stock[] = [];
-        let keys: string[] = Object.keys(data);
-
-        for (let key of keys) {
-            let obj: any = data[key];
-            let stock: Stock = new Stock(key, obj.cost, obj.amount, obj.price);
-            stocks.push(stock);
-        }
-
-        return stocks;
-    }
-
     public getNetWorth(): number {
-        // todo:
+        // todo: return cash + assets' worth
         return 0;
     }
 
-    public getTheMostPositionInStock(): Stock | null {
-        let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
-
+    public getAllLongInFx(): Fx[] {
         // todo:
-        return null;
+        return [];
     }
 }

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {Portfolio} from './lib/portfolio';
-import {Stock} from './lib/asset';
+import {Fx} from './lib/asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const INPUT_FILE = './input/data.json';
 let fullPathFile: string = path.resolve(process.cwd(), INPUT_FILE);
@@ -16,12 +16,14 @@ function main() {
 
     let value: number = portfolio.getNetWorth();
     console.log(`Net worth: ${value}`);
+    console.log(`Cash: ${portfolio.cash}`);
 
-    let mostStock: Stock | null = portfolio.getTheMostPositionInStock();
-    if (mostStock) {
-        let worth = mostStock.getWorth();
-        console.log(`Most stock: ${mostStock.name} Worth: ${worth}`);
+    let longFxs: Fx[] = portfolio.getAllLongInFx();
+    if (longFxs.length === 0) {
+        console.log('No long FX in portfolio');
     } else {
-        console.log('No stock in portfolio');
+        longFxs.forEach((fx) => {
+            // todo: show long fx detail
+        });
     }
 }
