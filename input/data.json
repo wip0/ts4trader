@@ -1,7 +1,18 @@
 {
-    "cash": 5000,   // try: remove or comment this line
     "assets": [
-        // try: add invalid asset into array assets
+        {
+            "type": "Cash",
+            "amount": 1000
+        },
+        {
+            //  How we handle multiple cash entris ?
+            "type": "Cash",
+            "amount": 500
+        },
+        {
+            "type": "???",
+            "amount": 555
+        },
         {
             "type": "Stock",
             "name": "GOOG.O",
