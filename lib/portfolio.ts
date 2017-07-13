@@ -82,12 +82,38 @@ private loadStock(data: any): Stock[] {
     }
 
     private getStockWorth(): number {
-        calculateFromStock(stock[]);// todo: 
+        this.calculateFromStock(this.stocks);// todo: 
         return 0;
     }
+    private calculateFromStock(stocks: Stock[]): number {
+    let net: number = 0;
+    for (let stock of stocks) {
+        net += (stock.price-stock.cost)*stock.amount;    // todo: Calculate profit/loss
+    }
+    return net;
+}
+
 
     private getFxWorth(): number {
-        calculateFromFx(Fx[])// todo:
+        this.calculateFromFx(this.fxs)// todo:
         return 0;
     }
+    private calculateFromFx(fxs: Fx[]): number{
+    let fxnet: number = 0;
+    for (let fx of fxs){
+        switch(fx.action) {
+            case "long":{
+                fxnet += (fx.bid - fx.cost)*fx.lot*10000;
+                break;
+            }
+            case "short":{
+                fxnet += (fx.cost - fx.ask)*fx.lot*10000;
+                break;
+        }
+    }
 }
+    return fxnet;
+}
+}
+
+
