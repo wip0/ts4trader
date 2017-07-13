@@ -17,7 +17,7 @@
         }     
     },
     "fx": {
-        "JPY=": {
+        "JPY.O=": {
             "action": "long",
             "cost": 98.350,
             "lot": 0.7,

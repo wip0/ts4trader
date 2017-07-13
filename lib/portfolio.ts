@@ -82,8 +82,8 @@ private loadStock(data: any): Stock[] {
     }
 
     private getStockWorth(): number {
-        this.calculateFromStock(this.stocks);// todo: 
-        return 0;
+        return this.calculateFromStock(this.stocks);// todo: 
+        
     }
     private calculateFromStock(stocks: Stock[]): number {
     let net: number = 0;
@@ -95,8 +95,8 @@ private loadStock(data: any): Stock[] {
 
 
     private getFxWorth(): number {
-        this.calculateFromFx(this.fxs)// todo:
-        return 0;
+        
+        return this.calculateFromFx(this.fxs)// todo:
     }
     private calculateFromFx(fxs: Fx[]): number{
     let fxnet: number = 0;
