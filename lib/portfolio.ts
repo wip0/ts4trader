@@ -14,19 +14,36 @@ export class Stock {
     }
 
     public getWorth(): number {
+        let net = 0, number;
+        let stock = tocks[]
+        for (let stock of stocks){
+            // todo:
+        return 0;
+    }
+}
+// todo: change interface Fx to class Fx // why do we need to check interface FX to class
+export class Fx {
+    public name: string;
+    public action: string;
+    public cost: number;
+    public lot: number;
+    public bid: number;
+    public ask: number;
+
+    constructor (name:string, action:string, cost: number, lot: number, bid: number, ask: number){
+    this.name = name;
+    this.action = action;
+    this.cost = cost;
+    this.lot = lot;
+    this.bid = bid;
+    this.ask = ask;
+}
+ public getFxWorth(): number {
         // todo:
         return 0;
     }
 }
-// todo: change interface Fx to class Fx 
-interface Fx {
-    name: string;
-    action: string;
-    cost: number;
-    amount: number;
-    bid: number;
-    ask: number;
-}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Portfolio {
     private stocks: Stock[];
@@ -42,7 +59,7 @@ export class Portfolio {
         try {
             let data: any = JSON.parse(fs.readFileSync(fileName, encoding));
             this.stocks = this.loadStock(data.stock);
-            // todo: load fx 
+            this.fxs = this.loadFx(data.fx);// todo: load fx 
         } catch (error) {
             bOK = false;
         }

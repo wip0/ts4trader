@@ -16,4 +16,7 @@ This repo is a tutorial programming for traders.
  - Run in VSCode by pressing F5. Or
  - node ./dist/main.js
 
-
+Question ex05
+1. interface to class --> why?
+2. constructor in class?
+3. export class meaning?
