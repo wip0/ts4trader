@@ -1,6 +1,5 @@
 import * as path from 'path';
 import {Portfolio} from './lib/portfolio';
-import {Fx} from './lib/asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const INPUT_FILE = './input/data.json';
 let fullPathFile: string = path.resolve(process.cwd(), INPUT_FILE);
@@ -18,12 +17,6 @@ function main() {
     console.log(`Net worth: ${value}`);
     console.log(`Cash: ${portfolio.cash}`);
 
-    let longFxs: Fx[] = portfolio.getAllLongInFx();
-    if (longFxs.length === 0) {
-        console.log('No long FX in portfolio');
-    } else {
-        longFxs.forEach((fx) => {
-            // todo: show long fx detail
-        });
-    }
+    let lossStocks: Stock[] = portfolio.getAllLossStock();
+    // todo: show all loss stocks detail
 }

@@ -4,11 +4,9 @@ const jsonminify = require('jsonminify');       // use require for old module
 import {Asset, AssetFactory, Stock, Fx} from './asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Portfolio {
-    public cash: number;        // try: change public to private and see what's happen
     private assets: Asset[];
 
     constructor() {
-        this.cash = 0;
         this.assets = [];
     }
 
@@ -18,17 +16,11 @@ export class Portfolio {
             let text: string = fs.readFileSync(fileName, encoding);
             let data: any = JSON.parse(jsonminify(text));
 
-            this.cash = data.cash || 0; // default is 0
-            
             this.assets = [];
             let assets: any[] = data.assets || [];
-            if (Array.isArray(assets)) {    // check data before creating
-                assets.forEach((asset) => { // try: change to for-of
-                    let obj = AssetFactory.create(asset);
-                    if (obj != null) {
-                        this.assets.push(obj);
-                    }
-                });
+            if (Array.isArray(assets)) {
+                let allAssets = assets.map((asset) => AssetFactory.create(asset));  // try: merge 2 lines into one line
+                this.assets = allAssets.filter((asset) => !AssetFactory.isInvalidAsset(asset));
             }
         } catch (error) {
             bOK = false;
@@ -36,12 +28,17 @@ export class Portfolio {
         return bOK;        
     }
 
-    public getNetWorth(): number {
-        // todo: return cash + assets' worth
+    public get cash(): number {
+        // todo: sum all cash entries
         return 0;
     }
 
-    public getAllLongInFx(): Fx[] {
+    public getNetWorth(): number {
+        // todo: 
+        return 0;
+    }
+
+    public getAllLossStock(): Stock[] {
         // todo:
         return [];
     }
