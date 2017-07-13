@@ -14,11 +14,9 @@ export class Stock {
     }
 
     public getWorth(): number {
-        let net = 0, number;
-        let stock = tocks[]
-        for (let stock of stocks){
-            // todo:
-        return 0;
+        {
+            return (this.price - this.cost)*this.amount;
+        }
     }
 }
 // todo: change interface Fx to class Fx // why do we need to check interface FX to class
@@ -31,18 +29,23 @@ export class Fx {
     public ask: number;
 
     constructor (name:string, action:string, cost: number, lot: number, bid: number, ask: number){
-    this.name = name;
-    this.action = action;
-    this.cost = cost;
-    this.lot = lot;
-    this.bid = bid;
-    this.ask = ask;
-}
- public getFxWorth(): number {
-        // todo:
-        return 0;
+        this.name = name;
+        this.action = action;
+        this.cost = cost;
+        this.lot = lot;
+        this.bid = bid;
+        this.ask = ask;
     }
-}
+public fxWorth(): number {
+        if (this.action = "long"){
+            return (this.bid - this.cost)*this.lot*10000;
+        }
+        else{
+            return (this.cost -this.ask)*this.lot *10000;
+        }   
+        }
+    }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Portfolio {
@@ -77,7 +80,16 @@ export class Portfolio {
 
         return stocks;
     }
-
+private loadFx(data: any): Fx[]{
+        let fxs: Fx[] = [];
+        let keys: string[] = Object.keys(data);
+        for (let key of keys){
+            let obj: any = data[key];
+            let fx: Fx = new Fx(obj.name, obj.action, obj.cost, obj.lot, obj.bid, obj.ask);
+            fxs.push(fx);   
+        }
+        return fxs;
+}
     public getNetWorth(): number {
         let stockWorth: number = this.getStockWorth();
         let fxWorth: number = this.getFxWorth();
@@ -94,16 +106,32 @@ export class Portfolio {
     }
 
     private getFxWorth(): number {
-        // todo:
-        return 0;
+        let sum = 0;
+        for (let fx of this.fxs){
+            sum += fx.fxWorth();// todo:
+        }
+        return sum;
     }
 
-    public getTheMostPositionInStock(): Stock | null {
+    public getTheMostPositionInStock(): Stock | any {
         if (this.stocks.length === 0) {
             return null;
         }
-
-        // todo:
-        return null;
+        else{
+            let sum = 0,number;
+            for (let stock of this.stocks) {
+                    sum = stock.cost*stock.amount;
+                    if (sum > stock.cost*stock.amount){
+                        sum = stock.cost * stock.amount;
+                    }
+                else {
+                    sum = sum;
+                }
+        }
+        return sum;
+        }      
     }
-}
+        
+        
+    }
+

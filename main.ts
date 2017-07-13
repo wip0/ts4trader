@@ -18,7 +18,7 @@ function main() {
 
     let mostStock: Stock | null = portfolio.getTheMostPositionInStock();
     if (mostStock) {
-        let worth = mostStock.getWorth();
+        let worth = portfolio.getTheMostPositionInStock();
         console.log(`Most stock: ${mostStock.name} Worth: ${worth}`);
     } else {
         console.log('No stock in portfolio');
