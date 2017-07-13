@@ -1,35 +1,44 @@
 {
-    "stock": {
-        "GOOG.O": {
+    "cash": 5000,   // try: remove or comment this line
+    "assets": [
+        // try: add invalid asset into array assets
+        {
+            "type": "Stock",
+            "name": "GOOG.O",
             "cost": 110.5,
             "amount": 1000,
             "price": 123
         },
-        "FB.O": {
+        {
+            "type": "Stock",
+            "name": "FB.O",
             "cost": 200,
             "amount": 4000,
             "price": 197.5
         },
-        "MSFT.O": {
-            "cost": 175,
+        {
+            "type": "Stock",
+            "name": "MSFT.O",
             "amount": 2000,
             "price": 176
-        }     
-    },
-    "fx": {
-        "JPY=": {
+        },
+        {
+            "type": "Fx",
+            "name": "JPY=",
             "action": "long",
             "cost": 98.350,
             "lot": 0.7,
             "bid": 98.445,
             "ask": 98.470
         },
-        "EUR=": {
+        {
+            "type": "Fx",
+            "name": "EUR=",
             "action": "short",
             "cost": 0.9984,
             "lot": 0.5,
             "bid": 0.9978,
             "ask": 0.9991
         }
-    }
+    ]
 }
