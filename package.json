@@ -18,6 +18,10 @@
   "homepage": "https://github.com/wip0/ts4trader#readme",
   "devDependencies": {
     "@types/node": "^8.0.9",
+    "@types/jsonminify": "0.4.0",
     "typescript": "2.4.1"
+  },
+  "dependencies": {
+    "jsonminify": "0.4.1"
   }
 }
