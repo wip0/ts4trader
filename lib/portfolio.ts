@@ -117,21 +117,19 @@ private loadFx(data: any): Fx[]{
         if (this.stocks.length === 0) {
             return null;
         }
-        else{
-            let sum = 0,number;
-            for (let stock of this.stocks) {
-                    sum = stock.cost*stock.amount;
-                    if (sum > stock.cost*stock.amount){
-                        sum = stock.cost * stock.amount;
-                    }
-                else {
-                    sum = sum;
-                }
+        let maxPosition =0, maxIndex=-1, i=0;
+        for (i=0; i<this.stocks.length;i++){
+            if (maxPosition < this.stocks[i].amount){
+                maxPosition = this.stocks[i].amount;
+                maxIndex = i
+            }
         }
-        return sum;
+        if (maxIndex>=0){
+            return this.stocks[maxIndex];
+        }
+        return null;
         }      
     }
         
         
-    }
-
+ 
