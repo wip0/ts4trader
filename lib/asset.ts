@@ -5,7 +5,6 @@ export interface Asset {
     name: string;
     cost: number;
     amount: number;
-
     getWorth(): number;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,10 +25,29 @@ export class Stock implements Asset {
 
     public getWorth(): number {
         // todo:
-        return 0;
+        return (this.price - this.cost)*this.amount;
     }    
 }
 
 export class Fx implements Asset {
-    // todo: 
+    public type : AssetType;
+    public name : string;
+    public action : string;
+    public cost : number;
+    public amount : number;
+    public bid : number;
+    public ask : number;
+    
+    constructor( name: string, action:string, cost: number, amount:number, bid:number, ask:number){
+        this.name = name;
+        this.action = action;
+        this.cost = cost;
+        this.amount = amount;
+        this.bid = bid;
+        this.ask = ask;
+        }// todo: 
+
+    public getWorth(): number{
+        return 0;
+    }
 }

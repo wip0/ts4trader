@@ -14,6 +14,8 @@ export class Portfolio {
             let data: any = JSON.parse(fs.readFileSync(fileName, encoding));
             let stocks: Stock[] = this.loadStock(data.stock);
             this.assets.push(...stocks);
+            let fx: Fx[] = this.loadFx(data.Fx);
+            this.assets.push(...fx);
             // todo: load fx 
         } catch (error) {
             bOK = false;
@@ -33,7 +35,17 @@ export class Portfolio {
 
         return stocks;
     }
+    private loadFx(data: any):Fx[] {
+        let fxs: Fx[] = [];
+        let keys: string[] = Object.keys(data);
 
+        for (let key of keys){
+            let obj: any = data[key];
+            let fxs: Fx = new Fx(key, obj.action, obj.cost, obj.amount, obj.bid, obj.offer);
+            fxs.push(fx);
+        }
+        return fx;
+    }
     public getNetWorth(): number {
         // todo:
         return 0;
