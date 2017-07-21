@@ -14,7 +14,7 @@ export class Portfolio {
             let data: any = JSON.parse(fs.readFileSync(fileName, encoding));
             let stocks: Stock[] = this.loadStock(data.stock);
             this.assets.push(...stocks);
-            let fx: Fx[] = this.loadFx(data.Fx);
+            let fx: Fx[] = this.loadFx(data.fx);
             this.assets.push(...fx);
             // todo: load fx 
         } catch (error) {
