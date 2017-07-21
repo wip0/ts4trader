@@ -40,6 +40,7 @@ export class Fx implements Asset {
     public ask : number;
     
     constructor( name: string, action:string, cost: number, amount:number, lot: number, bid:number, ask:number){
+        this.type = 'Fx';
         this.name = name;
         this.action = action;
         this.cost = cost;

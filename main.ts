@@ -17,7 +17,7 @@ function main() {
     let value: number = portfolio.getNetWorth();
     console.log(`Net worth: ${value}`);
 
-    let mostStock: Stock | null = portfolio.getTheMostPositionInStock();
+    let mostStock: any | null = portfolio.getTheMostPositionInStock();
     if (mostStock) {
         let worth = mostStock.getWorth();
         console.log(`Most stock: ${mostStock.name} Worth: ${worth}`);
