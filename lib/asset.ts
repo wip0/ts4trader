@@ -35,14 +35,16 @@ export class Fx implements Asset {
     public action : string;
     public cost : number;
     public amount : number;
+    public lot : number;
     public bid : number;
     public ask : number;
     
-    constructor( name: string, action:string, cost: number, amount:number, bid:number, ask:number){
+    constructor( name: string, action:string, cost: number, amount:number, lot: number, bid:number, ask:number){
         this.name = name;
         this.action = action;
         this.cost = cost;
         this.amount = amount;
+        this.lot = lot;
         this.bid = bid;
         this.ask = ask;
         }// todo: 
