@@ -50,6 +50,12 @@ export class Fx implements Asset {
         }// todo: 
 
     public getWorth(): number{
-        return 0;
+        if (this.action = "long"){
+            return (this.bid - this.cost)*this.lot*10000;
+        }
+        else{
+            return (this.cost -this.ask)*this.lot *10000;
+        }   
+        }
     }
-}
+
