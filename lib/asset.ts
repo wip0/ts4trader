@@ -36,9 +36,8 @@ export class Stock implements Asset {
         this.price = price;
     }
 
-    public getWorth(): number {
-        // todo:
-        return 0;
+    public getWorth(): number {// todo:
+        return (this.price - this.cost)*this.amount;
     }    
 }
 
@@ -63,8 +62,12 @@ export class Fx implements Asset {
     }
 
     public getWorth(): number {
-        // todo:
-        return 0;
+        if (this.action = "long"){
+            return (this.bid - this.cost)*this.lot*10000;
+        }
+        else{
+            return (this.cost -this.ask)*this.lot *10000;
+        }   
     }    
 // todo: 
 }
