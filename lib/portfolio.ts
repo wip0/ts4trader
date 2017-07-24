@@ -37,12 +37,42 @@ export class Portfolio {
     }
 
     public getNetWorth(): number {
-        // todo: return cash + assets' worth
-        return 0;
+        let stockWorth: number = this.getStockWorth();
+        let fxWorth: number = this.getFxWorth();
+        let cash: number = this.cash;
+        let netWorth: number = cash + stockWorth + fxWorth;
+        return netWorth;
+    }
+
+    private getStockWorth(): number {
+        
+        let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
+        let sum = 0;
+        for (let stock of this.assets ) {
+            sum += stock.getWorth();
+        }
+        return sum;
+    }
+
+    private getFxWorth(): number {
+        let fxs: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
+        let sum = 0;
+        for (let fx of this.assets){
+            sum += fx.getWorth();// todo:
+        }
+        return sum;
     }
 
     public getAllLongInFx(): Fx[] {
-        // todo:
+        let fx: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
+        for (let fxs of this.assets){
+            
+          
+            }
+        
         return [];
     }
 }
+///////////////////////////////////////////////////////////////////////
+
+        
