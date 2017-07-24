@@ -15,9 +15,8 @@ export class AssetFactory {
         if (assetType === 'Stock') {
             return <Asset> new Stock(data.name, data.cost, data.amount, data.price);
         } else if (assetType === 'Fx') {
-            // todo:
+            return <Asset> new Fx(data.name, data.action,data.cost, data.lot, data.bid,data.ask);// todo:
         }
-
         return null;
     }
 }
@@ -44,5 +43,28 @@ export class Stock implements Asset {
 }
 
 export class Fx implements Asset {
-    // todo: 
+    public type: AssetType;
+    public name: string;
+    public action: string;
+    public cost: number;
+    public lot: number;
+    public amount: number;
+    public bid: number;
+    public ask: number;
+
+    constructor(name: string, action: string, cost: number, lot: number, bid: number, ask: number) {
+        this.type = 'Fx';
+        this.name = name;
+        this.action = action;
+        this.cost = cost;
+        this.lot = lot;
+        this.bid = bid;
+        this.ask = ask;
+    }
+
+    public getWorth(): number {
+        // todo:
+        return 0;
+    }    
+// todo: 
 }
