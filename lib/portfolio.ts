@@ -64,10 +64,10 @@ export class Portfolio {
     }
 
     public getAllLongInFx(): Fx[] {
-        let fx: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
-        for (let fxs of this.assets){
-            
-          
+        let fx = <Fx> Asset;
+        for (let fx of <Fx>) {
+            if(this.action == 'long'){
+                console.log(Fx.name);
             }
         
         return [];
