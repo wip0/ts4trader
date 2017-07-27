@@ -21,4 +21,6 @@ csv.fromPath(INPUT_FILE, { headers: true}).on('data', (data: any) => {
 }).on('end', () => {
     //console.log('done');
     // todo: Find the max value and min value from the loaded historical data  
+}).on('error', (error) => {
+    console.log(error);
 });
