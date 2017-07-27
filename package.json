@@ -19,5 +19,8 @@
   "devDependencies": {
     "@types/node": "^8.0.9",
     "typescript": "2.4.1"
+  },
+  "dependencies": {
+    "fast-csv": "^2.4.0"
   }
 }
