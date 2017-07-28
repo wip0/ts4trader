@@ -50,13 +50,13 @@ export class Portfolio {
     public getTheMostPositionInStock(): Asset | null {
         let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
 
-        if (this.assets.length === 0) {
+        if (stocks.length === 0) {
             return null;
         }
         let maxPosition =0, maxIndex=-1, i=0;
-        for (i=0; i<this.assets.length;i++){
-            if (maxPosition < this.assets[i].amount){
-                maxPosition = this.assets[i].amount;
+        for (i=0; i<stocks.length;i++){
+            if (maxPosition < stocks[i].amount){
+                maxPosition = stocks[i].amount;
                 maxIndex = i
             }
         }
@@ -74,10 +74,9 @@ export class Portfolio {
     }
 
     private getStockWorth(): number {
-        
         let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
         let sum = 0;
-        for (let stock of this.assets ) {
+        for (let stock of stocks ) {
             sum += stock.getWorth();
         }
         return sum;
@@ -86,7 +85,7 @@ export class Portfolio {
     private getFxWorth(): number {
         let fxs: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
         let sum = 0;
-        for (let fx of this.assets){
+        for (let fx of fxs){
             sum += fx.getWorth();// todo:
         }
         return sum;
