@@ -37,7 +37,7 @@ export class Stock implements Asset {
     }
 
     public getWorth(): number {// todo:
-        return (this.price - this.cost)*this.amount;
+        return (this.price - this.cost) * this.amount;
     }    
 }
 

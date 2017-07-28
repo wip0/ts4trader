@@ -37,7 +37,7 @@ export class Portfolio {
     }
 
     public getNetWorth(): number {
-        let stockWorth: number = this.getStockWorth();
+        let stockWorth: number =this.getStockWorth();
         let fxWorth: number = this.getFxWorth();
         let cash: number = this.cash;
         let netWorth: number = cash + stockWorth + fxWorth;
@@ -48,7 +48,7 @@ export class Portfolio {
         
         let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
         let sum = 0;
-        for (let stock of this.assets ) {
+        for (let stock of stocks ) {
             sum += stock.getWorth();
         }
         return sum;
@@ -57,20 +57,21 @@ export class Portfolio {
     private getFxWorth(): number {
         let fxs: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
         let sum = 0;
-        for (let fx of this.assets){
+        for (let fx of fxs){
             sum += fx.getWorth();// todo:
         }
         return sum;
     }
 
     public getAllLongInFx(): Fx[] {
-        let fx = <Fx> Asset;
-        for (let fx of <Fx>) {
-            if(this.action == 'long'){
-                console.log(Fx.name);
+        let fxs: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
+        let list:Fx[] = [];
+        for (let fx of fxs) {
+            if(fx.action == 'long'){
+               list.push(fx); 
             }
-        
-        return [];
+        }
+        return list;                                                                           
     }
 }
 ///////////////////////////////////////////////////////////////////////

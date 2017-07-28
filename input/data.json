@@ -5,20 +5,21 @@
         {
             "type": "Stock",
             "name": "GOOG.O",
-            "cost": 110.5,
+            "cost": 123,
             "amount": 1000,
             "price": 123
         },
         {
             "type": "Stock",
             "name": "FB.O",
-            "cost": 200,
+            "cost": 197.5,
             "amount": 4000,
             "price": 197.5
         },
         {
             "type": "Stock",
             "name": "MSFT.O",
+            "cost": 176,
             "amount": 2000,
             "price": 176
         },
