@@ -4,7 +4,7 @@ export interface Asset {
     type: AssetType;
     name: string;
     cost?: number;      // ? mean optional
-    amount: number;
+    amount?: number;
 
     getWorth(): number;
 }
@@ -19,9 +19,10 @@ export class AssetFactory {
         } else if (assetType === 'Cash') {
             return <Asset> new Cash(data.amount, data.name);
         }
-
+        return <Asset> new InvalidAsset();
+        }
         // todo: return invalid asset
-    }
+    
 
     public static isInvalidAsset(asset: Asset | null): boolean {
         if (asset && asset.type) {
@@ -79,10 +80,31 @@ export class Stock implements Asset {
 
     public getWorth(): number {
         // todo:
-        return 0;
+        return (this.price - this.cost) * this.amount;
     }    
 }
 
 export class Fx implements Asset {
-    // todo: 
-}
+   public type: AssetType;
+   public name: string;
+   public action: string;
+   public cost: number;
+   public lot: number;
+   public bid: number;
+   public ask: number;
+
+   constructor(name:string, action: string, cost: number, lot: number, bid: number, ask:number ){
+       this.name = name;
+       this.action = action;
+       this.lot = lot;
+       this.bid = bid;
+       this.ask = ask;
+   }
+   public getWorth(): number{
+       if(this.action == 'long'){
+           return (this.bid - this.cost) * this.lot * 10000;
+       }
+           return (this.cost - this.ask) * this.lot * 10000;
+   } // todo: 
+} 
+
