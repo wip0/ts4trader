@@ -62,7 +62,7 @@ export class Fx implements Asset {
     }
 
     public getWorth(): number {
-        if (this.action = "long"){
+        if (this.action == 'long'){
             return (this.bid - this.cost)*this.lot*10000;
         }
         else{

@@ -67,9 +67,7 @@ export class Portfolio {
         let fxs: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
         let list:Fx[] = [];
         for (let fx of fxs) {
-            if(fx.action == 'long'){   
-             list.push(fx) ;
-        }
+            if(fx.action == 'long'){list.push(fx);}
         }
     return list;
                                                                            
