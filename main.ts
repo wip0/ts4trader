@@ -23,7 +23,7 @@ function main() {
         console.log('No long FX in portfolio');
     } else {
         longFxs.forEach((fx) => {
-        console.log('Here is Fx long position: ' + fx.name + ' cost: ' + fx.cost + ' lot: ' + fx.lot );// todo: show long fx detail
+        console.log('Here is Fx long position: ' + fx.name + ' cost: ' + fx.cost + ' lot: ' + fx.lot + ' action: ' + fx.action);// todo: show long fx detail
         });
     }
 

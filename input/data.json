@@ -5,21 +5,21 @@
         {
             "type": "Stock",
             "name": "GOOG.O",
-            "cost": 123,
+            "cost": 110.5,
             "amount": 1000,
             "price": 123
         },
         {
             "type": "Stock",
             "name": "FB.O",
-            "cost": 197.5,
+            "cost": 200,
             "amount": 4000,
             "price": 197.5
         },
         {
             "type": "Stock",
             "name": "MSFT.O",
-            "cost": 176,
+            "cost": 175,
             "amount": 2000,
             "price": 176
         },
@@ -36,15 +36,6 @@
             "type": "Fx",
             "name": "EUR=",
             "action": "short",
-            "cost": 0.9984,
-            "lot": 0.5,
-            "bid": 0.9978,
-            "ask": 0.9991
-        },
-        {
-            "type": "Fx",
-            "name": "GBP=",
-            "action": "long",
             "cost": 0.9984,
             "lot": 0.5,
             "bid": 0.9978,
