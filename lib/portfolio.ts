@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 const jsonminify = require('jsonminify');       // use require for old module
 
-import {Asset, AssetFactory, Stock, Fx} from './asset';
+import {Asset, Cash, AssetFactory, Stock, Fx, InvalidAsset} from './asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Portfolio {
     private assets: Asset[];
@@ -29,17 +29,55 @@ export class Portfolio {
     }
 
     public get cash(): number {
-        // todo: sum all cash entries
-        return 0;
+        let cashs: Cash[] = <Cash[]> this.assets.filter((asset) => asset.type === 'Cash');
+        let sum = 0;
+        for (let cash of cashs){
+            sum += cash.getWorth();
+        }
+        return sum;
     }
+    //public set cash(value: number){
+       // this.cash;
+    //}
 
     public getNetWorth(): number {
-        // todo: 
-        return 0;
+        let stockWorth = this.getStockWorth();
+        let fxWorth = this.getFxWorth();
+        let cash = this.cash;
+        let invalid = this.getInvalid();// todo: 
+        return stockWorth + fxWorth + cash + invalid;
     }
 
     public getAllLossStock(): Stock[] {
-        // todo:
-        return [];
+        let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
+        let lossList: Stock[] = [];
+        for(let stock of stocks){
+            if(stock.getWorth() < 0){lossList.push(stock);}
+        }
+        return lossList;
+}
+    public getStockWorth(): number{
+        let stocks: Stock[] = <Stock[]> this.assets.filter((asset) => asset.type === 'Stock');
+        let sum = 0;
+        for (let stock of stocks){
+            sum += stock.getWorth();
+        }
+        return sum;
+    }
+
+    public getFxWorth(): number{
+        let fxs: Fx[] = <Fx[]> this.assets.filter((asset) => asset.type === 'Fx');
+        let sum = 0;
+        for (let fx of fxs){
+            sum += fx.getWorth();// todo:
+        }
+        return sum;
+    }
+    public getInvalid(): number{
+        let sum = 0;
+        if( AssetFactory.isInvalidAsset){
+            sum += InvalidAsset.getWorth();
+        }
+        return sum;
     }
 }

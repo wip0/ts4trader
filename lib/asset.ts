@@ -15,11 +15,11 @@ export class AssetFactory {
         if (assetType === 'Stock') {
             return <Asset> new Stock(data.name, data.cost, data.amount, data.price);
         } else if (assetType === 'Fx') {
-            // todo:
+            return <Asset> new Fx(data.name,data.cost, data.action, data.lot, data.bid, data.ask);// todo:
         } else if (assetType === 'Cash') {
             return <Asset> new Cash(data.amount, data.name);
         }
-        return <Asset> new InvalidAsset();
+        return <Asset> new InvalidAsset(data.amount);
         }
         // todo: return invalid asset
     
@@ -33,18 +33,20 @@ export class AssetFactory {
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-class InvalidAsset implements Asset {
+export class InvalidAsset implements Asset {
     public type: AssetType;
     public name: string;
     public amount: number;
 
-    constructor() {
+    constructor(amount: number) {
         this.type = 'invalid';
         this.name = '';
         this.amount = NaN;
     }
 
-    public getWorth(): number { return this.amount; }
+    public getWorth(): number { 
+        return this.amount; 
+    }
 }
 
 export class Cash implements Asset {
@@ -93,8 +95,10 @@ export class Fx implements Asset {
    public bid: number;
    public ask: number;
 
-   constructor(name:string, action: string, cost: number, lot: number, bid: number, ask:number ){
+   constructor(name:string, cost: number, action: string, lot: number, bid: number, ask:number ){
+       this.type = 'Fx';
        this.name = name;
+       this.cost = cost;
        this.action = action;
        this.lot = lot;
        this.bid = bid;
@@ -104,7 +108,8 @@ export class Fx implements Asset {
        if(this.action == 'long'){
            return (this.bid - this.cost) * this.lot * 10000;
        }
+       else{
            return (this.cost - this.ask) * this.lot * 10000;
-   } // todo: 
-} 
-
+       } // todo: 
+   } 
+}
