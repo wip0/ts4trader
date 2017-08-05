@@ -74,9 +74,10 @@ export class Portfolio {
         return sum;
     }
     public getInvalid(): number{
+        let invalids: InvalidAsset[] = <InvalidAsset[]> this.assets.filter((asset) => asset.type === 'invalid');
         let sum = 0;
-        if( AssetFactory.isInvalidAsset){
-            sum += InvalidAsset.getWorth();
+        for (let invalid of invalids){
+            sum += invalid.getWorth()
         }
         return sum;
     }

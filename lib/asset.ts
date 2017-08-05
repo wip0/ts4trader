@@ -19,8 +19,10 @@ export class AssetFactory {
         } else if (assetType === 'Cash') {
             return <Asset> new Cash(data.amount, data.name);
         }
-        return <Asset> new InvalidAsset(data.amount);
-        }
+          else {
+              return <Asset> new InvalidAsset(data.amount);
+          }
+    }
         // todo: return invalid asset
     
 
@@ -33,7 +35,7 @@ export class AssetFactory {
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-export class InvalidAsset implements Asset {
+ export class InvalidAsset implements Asset {
     public type: AssetType;
     public name: string;
     public amount: number;
@@ -41,7 +43,7 @@ export class InvalidAsset implements Asset {
     constructor(amount: number) {
         this.type = 'invalid';
         this.name = '';
-        this.amount = NaN;
+        this.amount = amount;
     }
 
     public getWorth(): number { 
