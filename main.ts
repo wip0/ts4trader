@@ -1,5 +1,6 @@
 import * as path from 'path';
 import {Portfolio} from './lib/portfolio';
+import {Stock} from './lib/asset';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 const INPUT_FILE = './input/data.json';
 let fullPathFile: string = path.resolve(process.cwd(), INPUT_FILE);
@@ -17,7 +18,7 @@ function main() {
     console.log('Stock Worth: ' + portfolio.getStockWorth());
     console.log('Fx Worth: ' + portfolio.getFxWorth());
     console.log(`Cash: ${portfolio.cash}`);
-    console.log('invald:' + portfolio.getInvalid );
+    console.log('invald:' + portfolio.getInvalid() );
     console.log(`Net worth: ${value}`);
     
 
