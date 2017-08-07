@@ -20,14 +20,15 @@ csv.fromPath(INPUT_FILE, { headers: true}).on('data', (data: any) => {
     eurusd.push(<HistoricalData> data);
 }).on('end', () => {
     console.log('done');//console.log('done');
-function findMax(High:number){
+function findMax():number{
     let max: number = 0;
     for (let i of eurusd){
-    if( i.High > max){max = i.High;}
+    if( i.High > max){max = i.High}
     }
     return max; 
 }
-function findMin(Low:number){
+
+function findMin():number{
     let min: number = 100;
     for (let i of eurusd){
     if( i.Low < min){min = i.Low;}
