@@ -6,8 +6,8 @@ const csv = require('fast-csv');
 interface HistoricalData {
     date: string;
     open: number;
-    high: number;
-    low: number;
+    High: number;
+    Low: number;
     close: number;
 }
 
@@ -16,11 +16,27 @@ let eurusd: HistoricalData[] = [];
 const INPUT_FILE = './input/EURUSD.csv';
 let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
 csv.fromPath(INPUT_FILE, { headers: true}).on('data', (data: any) => {
-    //console.log(data);
+    console.log(data);//console.log(data);
     eurusd.push(<HistoricalData> data);
 }).on('end', () => {
-    //console.log('done');
-    // todo: Find the max value and min value from the loaded historical data  
+    console.log('done');//console.log('done');
+function findMax(High:number){
+    let max: number = 0;
+    for (let i of eurusd){
+    if( i.High > max){max = i.High;}
+    }
+    return max; 
+}
+function findMin(Low:number){
+    let min: number = 100;
+    for (let i of eurusd){
+    if( i.Low < min){min = i.Low;}
+    }
+    return min; 
+}
+
+   console.log ("highest value is: "+ findMax());
+   console.log("lowest value is: " + findMin()); // todo: Find the max value and min value from the loaded historical data  
 }).on('error', (error) => {
     console.log(error);
 });
