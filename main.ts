@@ -38,6 +38,6 @@ function findMin():number{
 
    console.log ("highest value is: "+ findMax());
    console.log("lowest value is: " + findMin()); // todo: Find the max value and min value from the loaded historical data  
-}).on('error', (error) => {
+}).on('error', (error:any) => {
     console.log(error);
 });
