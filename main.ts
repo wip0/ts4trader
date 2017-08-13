@@ -28,7 +28,15 @@ function loadHistoricalData(filename: string): Promise<HistoricalData[]> {
 const INPUT_FILE = './input/EURUSD.csv';
 let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
 loadHistoricalData(fullPathFile).then((data: HistoricalData[]) => {
-    // todo: Find when the price is the maximum value
+let EURUSD: HistoricalData[]; 
+function findMax():number{
+    let max: number = 0;
+    for (let i of EURUSD){
+    if( i.high > max){max = i.high}
+    }
+    return max; 
+}
+console.log( findMax());// todo: Find when the price is the maximum value
 }).catch((error: any) => {
     console.error(error);
 });
