@@ -24,11 +24,27 @@ function loadHistoricalData(filename: string): Promise<HistoricalData[]> {
     });
 }
 ////////////////////////////////////////////////////////////////////////////////
-// Read data from file
-const INPUT_FILE = './input/EURUSD.csv';
-let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
-loadHistoricalData(fullPathFile).then((data: HistoricalData[]) => {
-    // todo: Find when the price is the maximum value
-}).catch((error: any) => {
+const eurFile = './input/EURUSD.csv';
+const jpyFile = './input/USDJPY.csv';
+
+let inputFiles: string[] = [ eurFile, jpyFile ].map((file) => {
+    return path.resolve(process.cwd(), file);
+});
+// todo: check inputFiles value
+
+let promises = inputFiles.map((file) => {
+    return loadHistoricalData(file);
+});
+
+// now we would like to load both files in parallel
+Promise.all(promises).then((data: Array<HistoricalData[]>) => {
+    // here both of them are finish
+    let eur = data[0];
+    let jpy = data[1];
+
+    // todo: Find correlation between eur and jpy
+
+    
+}).catch((error) => {
     console.error(error);
 });
