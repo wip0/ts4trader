@@ -3,7 +3,7 @@ import * as path from 'path';
 
 const csv = require('fast-csv');
 ////////////////////////////////////////////////////////////////////////////////
-interface HistoricalData {
+interface BarData {
     date: string;
     open: number;
     high: number;
@@ -11,16 +11,30 @@ interface HistoricalData {
     close: number;
 }
 
-function loadHistoricalData(filename: string): Promise<HistoricalData[]> {
-    return new Promise<HistoricalData[]>((resolve, reject) => {
-        let prices: HistoricalData[] = [];
-        csv.fromPath(filename, { headers: true}).on('data', (data: HistoricalData) => {
+type TimeFrame = '1H' | '4H' | '1D';
+class BarHistory {
+    public readonly timeframe: TimeFrame;
+    public readonly data: BarData[];
+
+    constructor(timeframe: TimeFrame, data: BarData[]) {
+        this.timeframe = timeframe;
+        this.data = data;
+    }
+}
+
+function loadHistoricalData(filename: string): Promise<BarHistory> {
+    return new Promise<BarData[]>((resolve, reject) => {
+        let prices: BarData[] = [];
+        csv.fromPath(filename, { headers: true}).on('data', (data: BarData) => {
             prices.push(data);
         }).on('end', () => {
             resolve(prices);
         }).on('error', (error: any) => {
             reject(error);
         })
+    }).then((data: BarData[]) => {
+        // promise chain
+        return new BarHistory('1H', data);
     });
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -37,12 +51,13 @@ let promises = inputFiles.map((file) => {
 });
 
 // now we would like to load both files in parallel
-Promise.all(promises).then((data: Array<HistoricalData[]>) => {
+Promise.all(promises).then((data: BarHistory[]) => {
     // here both of them are finish
     let eur = data[0];
     let jpy = data[1];
 
-    // todo: Find correlation between eur and jpy
+    // now we have 1H data
+    // todo: create BarHistory for 4H and 1D timeframe
 
     
 }).catch((error) => {
