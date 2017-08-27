@@ -29,14 +29,15 @@ const INPUT_FILE = './input/EURUSD.csv';
 let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
 loadHistoricalData(fullPathFile).then((data: HistoricalData[]) => {
 let EURUSD: HistoricalData[]; 
-function findMax():number{
+function findMax():string{
     let max: number = 0;
+    let index: string = '';
     for (let i of EURUSD){
-    if( i.high > max){max = i.high}
+    if( i.high > max){max = i.high} {index = i.date}
     }
-    return max; 
+    return index; 
 }
-console.log( findMax());// todo: Find when the price is the maximum value
+console.log("the price is maximum when: " +  findMax());// todo: Find when the price is the maximum value
 }).catch((error: any) => {
     console.error(error);
 });
