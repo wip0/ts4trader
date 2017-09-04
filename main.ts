@@ -29,9 +29,9 @@ const INPUT_FILE = './input/EURUSD.csv';
 let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
 loadHistoricalData(fullPathFile).then((data: HistoricalData[]) => {
 let EURUSD: HistoricalData[]; 
-function findMax():string{
+function findMax():any{
     let max: number = 0;
-    let index: string = '';
+    let index = {};
     for (let i of EURUSD){
     if( i.high > max){max = i.high} {index = i.date}
     }
