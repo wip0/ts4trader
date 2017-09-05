@@ -4,11 +4,11 @@ import * as path from 'path';
 const csv = require('fast-csv');
 ////////////////////////////////////////////////////////////////////////////////
 interface HistoricalData {
-    date: string;
-    open: number;
-    high: number;
-    low: number;
-    close: number;
+    Date: string;
+    Open: number;
+    High: number;
+    Low: number;
+    Close: number;
 }
 
 function loadHistoricalData(filename: string): Promise<HistoricalData[]> {
@@ -28,16 +28,26 @@ function loadHistoricalData(filename: string): Promise<HistoricalData[]> {
 const INPUT_FILE = './input/EURUSD.csv';
 let fullPathFile: string = path.resolve(__dirname, INPUT_FILE);
 loadHistoricalData(fullPathFile).then((data: HistoricalData[]) => {
-let EURUSD: HistoricalData[]; 
-function findMax():any{
+let EURUSD = data; 
+function findMaxDate():string{
     let max: number = 0;
-    let index = {};
+    let index:string = '';
     for (let i of EURUSD){
-    if( i.high > max){max = i.high} {index = i.date}
+    if( i.High > max){max = i.High;
+        index = i.Date;}
     }
     return index; 
 }
-console.log("the price is maximum when: " +  findMax());// todo: Find when the price is the maximum value
+function findMax():number{
+    let max: number = 0;
+    for (let i of EURUSD){
+        if (i.High > max){
+        max = i.High;
+        }
+    }
+    return max;
+}
+console.log("the price is maximum when: " +  findMaxDate() + " at " + findMax());// todo: Find when the price is the maximum value
 }).catch((error: any) => {
     console.error(error);
 });
