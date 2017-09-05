@@ -33,7 +33,7 @@ function findMaxDate():string{
     let max: number = 0;
     let index:string = '';
     for (let i of EURUSD){
-    if( i.High > max){max = i.High;
+    if( i.High > max){
         index = i.Date;}
     }
     return index; 
