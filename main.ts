@@ -30,6 +30,10 @@ const jpyFile = './input/USDJPY.csv';
 let inputFiles: string[] = [ eurFile, jpyFile ].map((file) => {
     return path.resolve(process.cwd(), file);
 });
+inputFiles.forEach(element => {
+    console.log(element);
+    
+});
 // todo: check inputFiles value
 
 let promises = inputFiles.map((file) => {
