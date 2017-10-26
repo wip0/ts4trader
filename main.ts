@@ -49,13 +49,55 @@ Promise.all(promises).then((data: Array<HistoricalData[]>) => {
 function correlation(eur,jpy){
     return covariance(eur,jpy) / getSd(eur)*getSd(jpy)
 }*/
-function getAverage(data: Array<HistoricalData[]>){
+///////////////////////////////////////
+function getAverageEur(eur: HistoricalData[]):number{
     let total:number = 0;
-    for(var i = 0 ;  i < data[].close.length ; i++){
-        total +=data[].close; 
+    for(var i = 0 ;  i < data[0].length; i++){
+        total +=eur[i].close; 
     }
-    return total/data[].length;
+    return total/data[0].length;
 }   
+function getAverageJpy(jpy: HistoricalData[]):number{
+    let total:number = 0;
+    for(var i = 0 ;  i < data[1].length ; i++){
+        total +=jpy[i].close; 
+    }
+    return total/data[1].length;
+}   
+/////////////////////////////////////////////
+function getSdEur(eur: HistoricalData[]):number{
+    let sum:number = 0;
+    for(var i = 0; i< data[0].length; i++){
+        sum += Math.pow(Math.abs(eur[i].close - getAverageEur(eur)),2)
+    }
+    let sdEur:number ;
+    return sdEur = Math.sqrt(sum / data[0].length)
+}
+function getSdJpy(jpy: HistoricalData[]):number{
+    let sum:number = 0;
+    for(var i = 0; i< data[1].length; i++){
+        sum += Math.pow(Math.abs(jpy[i].close - getAverageEur(jpy)),2)
+    }
+    let sdJpy:number ;
+    return sdJpy = Math.sqrt(sum / data[1].length)
+}
+//////////////////////////////////////////////////////
+function covariance(eur: HistoricalData[], jpy: HistoricalData[]) : number{
+    let sum:number = 0
+    for(var i = 0; i < data[1].length; i++){
+        sum +=  (eur[i].close - getAverageEur(eur)) * (jpy[i].close - getAverageJpy(jpy))
+    }
+    return sum 
+}
+function corr(eur:HistoricalData[], jpy:HistoricalData[]):number{
+    return covariance(eur,jpy)/getSdEur(eur)*getSdJpy(jpy)
+
+}
+  console.log(" the correlation between eur&jpy is " + corr(eur,jpy))  
+}).catch((error) => {
+    console.error(error);
+});
+
 /*
 function getSd(data:[]){
     let avg:number = getAverage(data[]);
@@ -95,7 +137,3 @@ let result = numbers
    .reduce((sum, number) => sum + number)
 console.log(result) // 300
 */
-    
-}).catch((error) => {
-    console.error(error);
-});
