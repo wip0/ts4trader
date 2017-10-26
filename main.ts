@@ -14,9 +14,10 @@ interface HistoricalData {
 function loadHistoricalData(filename: string): Promise<HistoricalData[]> {
     return new Promise<HistoricalData[]>((resolve, reject) => {
         let prices: HistoricalData[] = [];
-        csv.fromPath(filename, { headers: true}).on('data', (data: HistoricalData) => {
+        csv.fromPath(filename, { headers: true}).on("data", (data: HistoricalData) => {
             prices.push(data);
         }).on('end', () => {
+            //console.log(prices)
             resolve(prices);
         }).on('error', (error: any) => {
             reject(error);
