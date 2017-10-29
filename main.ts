@@ -58,8 +58,14 @@ Promise.all(promises).then((data: BarHistory[]) => {
 
     // now we have 1H data
     // todo: create BarHistory for 4H and 1D timeframe
-
-    
+/*function toFourHour(eur:BarHistory[]): BarHistory[]{
+    for(var i = eur.length; i>1; i-4){
+        eur[i].
+    }
+    return [];
+}*/
+  console.log(data[0])
+  console.log(data[1])  
 }).catch((error) => {
     console.error(error);
 });
