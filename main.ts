@@ -12,7 +12,7 @@ interface BarData {
 }
 
 type TimeFrame = '1H' | '4H' | '1D';
-class BarHistory {
+export class BarHistory {
     public readonly timeframe: TimeFrame;
     public readonly data: BarData[];
 
@@ -58,14 +58,27 @@ Promise.all(promises).then((data: BarHistory[]) => {
 
     // now we have 1H data
     // todo: create BarHistory for 4H and 1D timeframe
-/*function toFourHour(eur:BarHistory[]): BarHistory[]{
-    for(var i = eur.length; i>1; i-4){
-        eur[i].
+function toFourHour(eur:BarData[]){
+    let history = new BarHistory('4H', eur)
+    for(var i = 2; i <eur.length; i+4){
+    
+        history.data[i].close = history.data[i].close
+        history.data[i].date = history.data[i+3].date
+        if(history.data[i].high > history.data[i-4].high){
+            history.data[i].high = history.data[i].high
+        }else{
+            history.data[i].high = history.data[i+4].high
+        }
+        if(history.data[i].low > history.data[i+4].low){
+            history.data[i].low = history.data[i+4].low
+        }else{
+            history.data[i].low = history.data[i].low
+        }
     }
-    return [];
-}*/
-  console.log(data[0])
-  console.log(data[1])  
+    console.log(history.data)
+  
+}
+  console.log(toFourHour(eur))
 }).catch((error) => {
     console.error(error);
 });
