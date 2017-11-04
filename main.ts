@@ -53,32 +53,38 @@ let promises = inputFiles.map((file) => {
 // now we would like to load both files in parallel
 Promise.all(promises).then((data: BarHistory[]) => {
     // here both of them are finish
-    let eur = data[0];
+    let eur = data[0] ;
     let jpy = data[1];
+console.log(data[0].data[0].close)
+console.log(data[0].data[1].close)
 
     // now we have 1H data
     // todo: create BarHistory for 4H and 1D timeframe
-function toFourHour(eur:BarData[]){
-    let history = new BarHistory('4H', eur)
-    for(var i = 2; i <eur.length; i+4){
-    
-        history.data[i].close = history.data[i].close
-        history.data[i].date = history.data[i+3].date
-        if(history.data[i].high > history.data[i-4].high){
-            history.data[i].high = history.data[i].high
+function toFourHour(info:BarData[]):BarHistory{
+    let newData: BarData[] =[]
+    for(var i = 0; i < info.length; i+4){
+        //close
+        newData[i].close = info[i].close  // why i cant use eur instead of data[0]
+        //date
+        newData[i].date = info[i].date
+        //high
+        if(newData[i].high > info[i+4].high){
+            newData[i].high = info[i].high
         }else{
-            history.data[i].high = history.data[i+4].high
+            newData[i].high =info[i+4].high
         }
-        if(history.data[i].low > history.data[i+4].low){
-            history.data[i].low = history.data[i+4].low
+        //low
+        if(newData[i].low > info[i+4].low){
+            newData[i].low = info[i+4].low
         }else{
-            history.data[i].low = history.data[i].low
+            newData[i].low = info[i].low
         }
+       
     }
-    console.log(history.data)
-  
+    return new BarHistory('4H', newData)
 }
   console.log(toFourHour(eur))
+
 }).catch((error) => {
     console.error(error);
 });
