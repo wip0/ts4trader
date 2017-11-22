@@ -20,7 +20,33 @@ export class BarHistory {
         this.timeframe = timeframe;
         this.data = data;
     }
+/*public toFourHour(eur:BarHistory):BarHistory{
+    let eur4h = new BarHistory('4H', [])
+    for(var i = 0 ; i <eur.data.length; i+4){
+        //close
+         this.data[i].close=  eur.data[i].close // why i cant use eur instead of data[0]
+        //date
+        eur4h.data[i].date = eur.data[i].date
+        //high
+        if(eur4h.data[i].high > eur.data[i+4].high){
+           eur4h.data[i].high = eur.data[i].high
+        }else{
+            eur4h.data[i].high =eur.data[i+4].high
+        }
+        //low
+        if(eur4h.data[i].low > eur.data[i+4].low){
+            eur4h.data[i].low = eur.data[i+4].low
+        }else{
+            eur4h.data[i].low = eur.data[i].low
+        }
+       
+    }
+    return new BarHistory('4H', eur4h.data)
+
+}*/
+
 }
+
 
 function loadHistoricalData(filename: string): Promise<BarHistory> {
     return new Promise<BarData[]>((resolve, reject) => {
@@ -55,36 +81,36 @@ Promise.all(promises).then((data: BarHistory[]) => {
     // here both of them are finish
     let eur = data[0] ;
     let jpy = data[1];
-console.log(data[0].data[0].close)
-console.log(data[0].data[1].close)
 
     // now we have 1H data
     // todo: create BarHistory for 4H and 1D timeframe
-function toFourHour(info:BarData[]):BarHistory{
-    let newData: BarData[] =[]
-    for(var i = 0; i < info.length; i+4){
+//////////////////////////////////////////////////
+
+function toFourHour(eur:BarHistory):BarHistory{
+    let eur4h = new BarHistory('4H', [])
+    for(var i = 0 ; i <eur.data.length; i+4){
         //close
-        newData[i].close = info[i].close  // why i cant use eur instead of data[0]
+         eur4h.data[i].close=  eur.data[i].close // why i cant use eur instead of data[0]
         //date
-        newData[i].date = info[i].date
+        eur4h.data[i].date = eur.data[i].date
         //high
-        if(newData[i].high > info[i+4].high){
-            newData[i].high = info[i].high
+        if(eur4h.data[i].high > eur.data[i+4].high){
+           eur4h.data[i].high = eur.data[i].high
         }else{
-            newData[i].high =info[i+4].high
+            eur4h.data[i].high =eur.data[i+4].high
         }
         //low
-        if(newData[i].low > info[i+4].low){
-            newData[i].low = info[i+4].low
+        if(eur4h.data[i].low > eur.data[i+4].low){
+            eur4h.data[i].low = eur.data[i+4].low
         }else{
-            newData[i].low = info[i].low
+            eur4h.data[i].low = eur.data[i].low
         }
        
     }
-    return new BarHistory('4H', newData)
+    return new BarHistory('4H', eur4h.data)
 }
-  console.log(toFourHour(eur))
-
+console.log(toFourHour(eur))
 }).catch((error) => {
     console.error(error);
 });
+
