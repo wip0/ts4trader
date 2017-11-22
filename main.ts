@@ -1,3 +1,4 @@
+require('source-map-support').install();
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -87,8 +88,30 @@ Promise.all(promises).then((data: BarHistory[]) => {
 //////////////////////////////////////////////////
 
 function toFourHour(eur:BarHistory):BarHistory{
-    let eur4h = new BarHistory('4H', [])
-    for(var i = 0 ; i <eur.data.length; i+4){
+    let bar4Hs: BarData[] = [];
+    for(let i = 0 ; i < eur.data.length; i+4) { // todo: fix the loop
+        let bar1H = eur.data[i];
+        console.log(' - idx: ' + i + ' Date: ' + bar1H.date);
+
+        // todo: Convert 1H to 4H
+        let date4H = bar1H.date;
+        let open4H = bar1H.open;
+        let close4H = bar1H.close;
+        let high4H = bar1H.high;
+        let low4H = bar1H.low;
+        
+        let bar4H: BarData = {
+            date: date4H,
+            open: open4H,
+            high: high4H,
+            low: low4H,
+            close: close4H,
+        };
+        
+
+        bar4Hs.push(bar4H);
+
+        /*
         //close
          eur4h.data[i].close=  eur.data[i].close // why i cant use eur instead of data[0]
         //date
@@ -104,10 +127,10 @@ function toFourHour(eur:BarHistory):BarHistory{
             eur4h.data[i].low = eur.data[i+4].low
         }else{
             eur4h.data[i].low = eur.data[i].low
-        }
+        }//*/
        
     }
-    return new BarHistory('4H', eur4h.data)
+    return new BarHistory('4H', bar4Hs)
 }
 console.log(toFourHour(eur))
 }).catch((error) => {
