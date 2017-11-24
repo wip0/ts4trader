@@ -21,31 +21,6 @@ export class BarHistory {
         this.timeframe = timeframe;
         this.data = data;
     }
-/*public toFourHour(eur:BarHistory):BarHistory{
-    let eur4h = new BarHistory('4H', [])
-    for(var i = 0 ; i <eur.data.length; i+4){
-        //close
-         this.data[i].close=  eur.data[i].close // why i cant use eur instead of data[0]
-        //date
-        eur4h.data[i].date = eur.data[i].date
-        //high
-        if(eur4h.data[i].high > eur.data[i+4].high){
-           eur4h.data[i].high = eur.data[i].high
-        }else{
-            eur4h.data[i].high =eur.data[i+4].high
-        }
-        //low
-        if(eur4h.data[i].low > eur.data[i+4].low){
-            eur4h.data[i].low = eur.data[i+4].low
-        }else{
-            eur4h.data[i].low = eur.data[i].low
-        }
-       
-    }
-    return new BarHistory('4H', eur4h.data)
-
-}*/
-
 }
 
 
@@ -89,9 +64,9 @@ Promise.all(promises).then((data: BarHistory[]) => {
 
 function toFourHour(eur:BarHistory):BarHistory{
     let bar4Hs: BarData[] = [];
-    for(let i = 0 ; i < eur.data.length; i+4) { // todo: fix the loop
+    for(let i = 0,b = 0 ; i < eur.data.length; i += 4, b += 4) { // todo: fix the loop
         let bar1H = eur.data[i];
-        console.log(' - idx: ' + i + ' Date: ' + bar1H.date);
+      
 
         // todo: Convert 1H to 4H
         let date4H = bar1H.date;
@@ -99,7 +74,7 @@ function toFourHour(eur:BarHistory):BarHistory{
         let close4H = bar1H.close;
         let high4H = bar1H.high;
         let low4H = bar1H.low;
-        
+        console.log(' - idx: ' + i + ' Date: ' + bar1H.date);
         let bar4H: BarData = {
             date: date4H,
             open: open4H,
@@ -107,27 +82,44 @@ function toFourHour(eur:BarHistory):BarHistory{
             low: low4H,
             close: close4H,
         };
+        ////////////////open///////////////
+        let open:number = 0;
+        for(let z = i ; z < b + 4; z ++){
+            open = eur.data[z].open;
+        } 
+         bar4H.open = open    
+         //////////////close/////////////
+
+         bar4H.close= bar1H.close 
+         /////////////date///////////////
+
+         bar4H.date = bar1H.date
+         ////////////high////////////////
+
+         let max:number = 0;
+         for(let j = i; j < b + 4; j++){
+              if( eur.data[j].high > max){
+              max = eur.data[j].high;
+              }
+              else{
+                 max = max
+              }
+        bar4H.high = max;
+            }
         
+         /////////////low////////////////
+         let min:number = 1000;
+         for(let k = i; k < b + 4; k++){
+            if(eur.data[k].low < min){
+                min = eur.data[k].low;
+            }
+            else{
+                min = min;
+            }
+            bar4H.low = min;
+         }
 
-        bar4Hs.push(bar4H);
-
-        /*
-        //close
-         eur4h.data[i].close=  eur.data[i].close // why i cant use eur instead of data[0]
-        //date
-        eur4h.data[i].date = eur.data[i].date
-        //high
-        if(eur4h.data[i].high > eur.data[i+4].high){
-           eur4h.data[i].high = eur.data[i].high
-        }else{
-            eur4h.data[i].high =eur.data[i+4].high
-        }
-        //low
-        if(eur4h.data[i].low > eur.data[i+4].low){
-            eur4h.data[i].low = eur.data[i+4].low
-        }else{
-            eur4h.data[i].low = eur.data[i].low
-        }//*/
+        bar4Hs.push(bar4H);       
        
     }
     return new BarHistory('4H', bar4Hs)
