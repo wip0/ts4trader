@@ -191,10 +191,11 @@ function toEod(eur:BarHistory):BarHistory{
             }
             bar24H.low = min;
             
+            }
+
+            bar24Hs.push(bar24H);   
         }
-        bar24Hs.push(bar24H);   
-    }
-return new BarHistory('1D', bar24Hs)
+    return new BarHistory('1D', bar24Hs)
 }
 console.log(toFourHour(eur))
 console.log(toEod(eur))
