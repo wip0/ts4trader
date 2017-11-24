@@ -82,20 +82,25 @@ function toFourHour(eur:BarHistory):BarHistory{
             low: low4H,
             close: close4H,
         };
-        ////////////////open///////////////
+        /////////////////////////////////
+        ////////////////open/////////////
+        /////////////////////////////////
         let open:number = 0;
         for(let z = i ; z < b + 4; z ++){
             open = eur.data[z].open;
         } 
          bar4H.open = open    
+         ////////////////////////////////
          //////////////close/////////////
-
+         ////////////////////////////////
          bar4H.close= bar1H.close 
+         ////////////////////////////////
          /////////////date///////////////
-
+         ////////////////////////////////
          bar4H.date = bar1H.date
+         ////////////////////////////////
          ////////////high////////////////
-
+         ////////////////////////////////
          let max:number = 0;
          for(let j = i; j < b + 4; j++){
               if( eur.data[j].high > max){
@@ -106,8 +111,9 @@ function toFourHour(eur:BarHistory):BarHistory{
               }
         bar4H.high = max;
             }
-        
+         ////////////////////////////////
          /////////////low////////////////
+         ////////////////////////////////
          let min:number = 1000;
          for(let k = i; k < b + 4; k++){
             if(eur.data[k].low < min){
@@ -124,7 +130,74 @@ function toFourHour(eur:BarHistory):BarHistory{
     }
     return new BarHistory('4H', bar4Hs)
 }
+function toEod(eur:BarHistory):BarHistory{
+    let bar24Hs: BarData[] = [];
+    for(let i = 0,b = 0 ; i < eur.data.length; i += 24, b += 24) { // todo: fix the loop
+        let bar1H = eur.data[i];
+      
+        // todo: Convert 1H to 24H
+        let date24H = bar1H.date;
+        let open24H = bar1H.open;
+        let close24H = bar1H.close;
+        let high24H = bar1H.high;
+        let low24H = bar1H.low;
+        console.log(' - idx: ' + i + ' Date: ' + bar1H.date);
+        let bar24H: BarData = {
+            date: date24H,
+            open: open24H,
+            high: high24H,
+            low: low24H,
+            close: close24H,
+        };
+        /////////////////////////////////
+        ////////////////open/////////////
+        /////////////////////////////////
+        let open:number = 0;
+        for(let z = i ; z < b + 24; z ++){
+            open = eur.data[z].open;
+        } 
+         bar24H.open = open    
+         ////////////////////////////////
+         //////////////close/////////////
+         ////////////////////////////////
+         bar24H.close= bar1H.close 
+         ////////////////////////////////
+         /////////////date///////////////
+         ////////////////////////////////
+         bar24H.date = bar1H.date
+         ////////////////////////////////
+         ////////////high////////////////
+         ////////////////////////////////
+         let max:number = 0;
+         for(let j = i; j < b + 24; j++){
+              if( eur.data[j].high > max){
+              max = eur.data[j].high;
+              }
+              else{
+                 max = max
+              }
+        bar24H.high = max;
+            }
+         ////////////////////////////////
+         /////////////low////////////////
+         ////////////////////////////////
+         let min:number = 1000;
+         for(let k = i; k < b + 24; k++){
+            if(eur.data[k].low < min){
+                min = eur.data[k].low;
+            }
+            else{
+                min = min;
+            }
+            bar24H.low = min;
+            
+        }
+        bar24Hs.push(bar24H);   
+    }
+return new BarHistory('1D', bar24Hs)
+}
 console.log(toFourHour(eur))
+console.log(toEod(eur))
 }).catch((error) => {
     console.error(error);
 });
