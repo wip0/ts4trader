@@ -5,10 +5,10 @@ require('source-map-support').install();
 const request = require("request");
 ///////////////////////////////////////////////////////////////////////////////////////////
 const hostUrl = 'http://api.worldbank.org/v2/';
-const countryApiUrl = `${hostUrl}/countries/all`;
+const countryApiUrl = `${hostUrl}/countries?per_page=500`;
 let data = '';
 // https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
-request.get(`${countryApiUrl}?format=json`)
+request.get(`${countryApiUrl}&format=json`)
     .on('response', (res) => {
     console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`);
 })
@@ -28,8 +28,8 @@ request.get(`${countryApiUrl}?format=json`)
         for (var j = 0; j < object.length; j++) {
             var incomeLevel = object[j];
             //console.log(incomeLevel)
-            if (incomeLevel.incomeLevel.value == 'High income') {
-                console.log(`${incomeLevel.incomeLevel.value} : ${object[j].name} : capitalCity : ${object[j].capitalCity}`);
+            if (incomeLevel.incomeLevel.value == 'Upper middle income') {
+                console.log(`${incomeLevel.incomeLevel.value} : ${object[j].name}`);
             }
         }
     }
