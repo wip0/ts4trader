@@ -9,23 +9,48 @@ const request = require("request");
 
 const hostUrl = 'http://api.worldbank.org/v2/';
 const countryApiUrl = `${hostUrl}/countries?page=`+ page;
-let data = '';
+let data:string= ''
 // https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
 
-function fetch(page){
-    var url: string = "http://api.worldbank.org/v2/countries?page=" + page + "&format=json"
-    request.get(url, function(result) {
-        if (page < 7){
-            fetch(page++)
-        }
+
+let promiseToGetData = new Promise(function(resolve, reject){
+
+    var url: string = "http://api.worldbank.org/v2/countries?page=" + page + "&format=json";
+    for(page =1; page<=7; page++){
+    
+    request.get(url)
+    .on('response', (res) => {
+        console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`);
+    })    
+
+    .on('data', (buf:Buffer) => {
+        data += buf;
     })
-}
+    
+    .on('end', () => {
+        data.concat(data.toString())
+    
+    })
+    }
+    if (page=7){
+        resolve();
+    }else{
+        reject();
+    }
+
+    
+});
+
+promiseToGetData.then(function(fromResolve){
+    console.log(`Data: ${data}`);
+})
 
 
+/*
 request.get(url)
     .on('response', (res) => {
     console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`);
-    fetch(page);
+   
 })
     .on('data', (buf:Buffer) => {
     data += buf;
