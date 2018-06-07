@@ -24,7 +24,7 @@ function initialize() {
         })
     })
 
-}
+}               
 
 function main() {
     var initializePromise = initialize();
@@ -121,8 +121,31 @@ const countryApiUrl = `${hostUrl}/countries?page=`+ page;
 
 
 // https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
-
-
+/*
+var urls = ["http://api.worldbank.org/v2/countries?page=1&format=json","http://api.worldbank.org/v2/countries?page=2&format=json"]
+let promiseToGetWeb:Promise<string> = new Promise(function(resolve,reject){
+    let data:string = ''
+    urls.map(function(url){
+        request.get(url)
+        .on('response',(res:Response)=>{
+            //console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`)
+        })
+        .on('data',(buf:Buffer)=>{
+            data += buf
+        })
+        .on('end', ()=>{
+            resolve(data)
+        })
+        .on('error',(error:Error)=>{
+            console.error(error.message || error)
+        })
+        })
+    })
+promiseToGetWeb.then(function(result){
+    let object1 = JSON.parse(result)
+    console.log(object1)
+})
+*/
  let promiseToGetData1:Promise<string> =
 
     new Promise(function(resolve, reject){
@@ -141,6 +164,7 @@ const countryApiUrl = `${hostUrl}/countries?page=`+ page;
     })
     .on('end',()=>{
         resolve(data1);
+        // Object way :resolve(JSON.parse(data1))
     })
     .on('error',(error:Error)=>{
         console.error(error.message || error);
@@ -165,11 +189,13 @@ const countryApiUrl = `${hostUrl}/countries?page=`+ page;
     })
     .on('end',()=>{
         resolve(data2);
+        //Object way : resolve(JSON.parse(data2))
     })
     .on('error',(error:Error)=>{
         console.error(error.message || error);
     })
 });
+
 
 ////////////////////////
 
@@ -289,20 +315,38 @@ let promiseToGetData7:Promise<string> = new Promise(function(resolve, reject){
     })
 });
 
-
-Promise.all([promiseToGetData1,promiseToGetData2,promiseToGetData3,promiseToGetData4,promiseToGetData5,
-    promiseToGetData6,promiseToGetData7]).then(function(result){
+let promises:Array<Promise<string>> = [promiseToGetData1,promiseToGetData2,promiseToGetData3,promiseToGetData4,promiseToGetData5,
+promiseToGetData6,promiseToGetData7]
+Promise.all(promises).then(function(result){
 let arrayofmyobj:Array<object> = result.map(x=>{return JSON.parse(x)})
     for (var i = 0; i < arrayofmyobj.length; i++) {
-        var object:Array<any>= arrayofmyobj[i];
+        var object:Array<object | any>= arrayofmyobj[i];
         //console.log(object);
         for (var j = 0; j < object.length; j++) {
-            var incomeLevel = object[j];
-            console.log(incomeLevel)
-            for(var k = 0; k<incomeLevel.length; k++){
+            var countries = object[j];
+            console.log(countries)
+            for(var k = 0; k<countries.length; k++){
                  
-                if (incomeLevel[k].incomeLevel.value == 'Upper middle income') {
-                    console.log(`${incomeLevel[k].incomeLevel.value} : ${incomeLevel[k].name}`);
+                if (countries[k].incomeLevel.value == 'High middle income') {
+                    console.log(`${countries[k].incomeLevel.value} : ${countries[k].name}`);
+            }
+        }
+    }
+}
+})
+/*
+Promise.all([promiseToGetData1,promiseToGetData2]).then(function(result){
+    let arrayofmyobj:Array<object> = result
+    for (var i = 0; i < arrayofmyobj.length; i++) {
+        var object:Array<object | any>= arrayofmyobj[i];
+        //console.log(object);
+        for (var j = 0; j < object.length; j++) {
+            var countries = object[j];
+            console.log(countries)
+            for(var k = 0; k<countries.length; k++){
+                 
+                if (countries[k].incomeLevel.value == 'Upper middle income') {
+                    console.log(`${countries[k].incomeLevel.value} : ${countries[k].name}`);
             }
         }
     }
