@@ -117,8 +117,32 @@ const request = require("request");
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 const hostUrl = 'http://api.worldbank.org/v2/';
-const countryApiUrl = `${hostUrl}/countries?page=`+ page;
-
+const countryApiUrl = `${hostUrl}/countries?page=`+ page + "&format=JSON";
+let collection:string = '';
+var storage = new Array(collection)
+    let promiseToGetWeb:Promise<string> = new Promise(function(resolve,reject){
+        for(page=1;page<100;page++){
+            if(request.get(hostUrl+countryApiUrl).on('response',(res:Response) =>{return 400})
+            ){
+                console.log('end')
+            }
+            else{
+            request.get(hostUrl+countryApiUrl).on('data',(buf:Buffer)=>{
+                storage[page] += buf
+              
+            })
+            .on('end',()=>{
+                resolve (storage[page])
+            })
+        
+        }
+    }
+        
+})
+promiseToGetWeb.then(function(result){
+    console.log(result)
+})
+   
 
 // https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
 /*
@@ -145,7 +169,7 @@ promiseToGetWeb.then(function(result){
     let object1 = JSON.parse(result)
     console.log(object1)
 })
-*/
+
  let promiseToGetData1:Promise<string> =
 
     new Promise(function(resolve, reject){
