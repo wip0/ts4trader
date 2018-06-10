@@ -112,40 +112,47 @@ main()
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install();
-let page:number = 1;
+
 const request = require("request");
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-const hostUrl = 'http://api.worldbank.org/v2/';
-const countryApiUrl = `${hostUrl}/countries?page=`+ page + "&format=JSON";
-let collection:string = '';
-var storage = new Array(collection)
-    let promiseToGetWeb:Promise<string> = new Promise(function(resolve,reject){
-        for(page=1;page<100;page++){
-            if(request.get(hostUrl+countryApiUrl).on('response',(res:Response) =>{return 400})
-            ){
-                console.log('end')
-            }
-            else{
-            request.get(hostUrl+countryApiUrl).on('data',(buf:Buffer)=>{
-                storage[page] += buf
-              
-            })
-            .on('end',()=>{
-                resolve (storage[page])
-            })
-        
+//const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
+//const countryApiUrl = `${hostUrl}/countries?page=`+ page + "&format=JSON";
+
+let page:number = 1;
+let promises:Array<Promise<string>> = [];
+
+
+function getWebSite(){
+    return promises.push(new Promise(function(resolve,reject){
+        let collection:string = ''
+        let storage:Array<string> = [];
+        for(page=1;page<=7;page++){
+            let hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
+             request.get(hostUrl)
+        .on('data',(buf:Buffer)=>{
+            collection += buf
+        })
+        .on('end',()=>{
+            resolve(collection)
+        }).then(function(){
+            storage.push(collection)
+        })
+    
         }
-    }
         
-})
-promiseToGetWeb.then(function(result){
+    }))
+}
+    
+ getWebSite();       
+    
+Promise.all(promises).then(function(result){
     console.log(result)
 })
    
-
-// https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
 /*
+// https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
+
 var urls = ["http://api.worldbank.org/v2/countries?page=1&format=json","http://api.worldbank.org/v2/countries?page=2&format=json"]
 let promiseToGetWeb:Promise<string> = new Promise(function(resolve,reject){
     let data:string = ''
