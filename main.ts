@@ -119,36 +119,32 @@ const request = require("request");
 //const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
 //const countryApiUrl = `${hostUrl}/countries?page=`+ page + "&format=JSON";
 
-let page:number = 1;
-let promises:Array<Promise<string>> = [];
 
 
-function getWebSite(){
-    return promises.push(new Promise(function(resolve,reject){
-        let collection:string = ''
-        let storage:Array<string> = [];
-        for(page=1;page<=7;page++){
-            let hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
-             request.get(hostUrl)
-        .on('data',(buf:Buffer)=>{
-            collection += buf
+function getWebSite(idx:number):Promise<string>{
+    return new Promise(function(resolve,reject){
+        let data:string = ''
+        const hostUrl:string = 'http://api.worldbank.org/v2/countries?page='+ idx + "&format=JSON";
+        request.get(hostUrl)
+        .on('response', (res:Response)=>{
+            //console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`)
         })
-        .on('end',()=>{
-            resolve(collection)
-        }).then(function(){
-            storage.push(collection)
+        .on('data', (buf:Buffer)=>{
+            data += buf
         })
-    
-        }
-        
-    }))
+        .on('end', ()=>{
+            resolve(data)
+        })
+    })
+
 }
+
     
- getWebSite();       
     
-Promise.all(promises).then(function(result){
-    console.log(result)
-})
+ getWebSite(1).then(function(result){
+     let object1 = JSON.parse(result)
+     console.log(object1);       
+
    
 /*
 // https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-api-country-queries
