@@ -1,6 +1,63 @@
 import { url } from "inspector";
 import { error } from "util";
 import { Buffer } from "buffer";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require('source-map-support').install();
+
+const request = require("request");
+///////////////////////////////////////////////////////////////////////////////////////////
+
+//const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
+//const countryApiUrl = `${hostUrl}/countries?page=`+ page + "&format=JSON";
+
+
+///Function to extract data
+function getWebSite(idx:number):Promise<string>{
+    return new Promise(function(resolve,reject){
+        let data:string = ''
+        const hostUrl:string = 'http://api.worldbank.org/v2/countries?page='+ idx + "&format=JSON";
+        request.get(hostUrl)
+        .on('response', (res:Response)=>{
+            //console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`)
+        })
+        .on('data', (buf:Buffer)=>{
+            data += buf
+        })
+        .on('end', ()=>{
+            resolve(data)
+        })
+    })
+
+}
+
+    
+//Loop to use function    
+let promises:Array<Promise<string>> = [];
+for(var idx:number =1; idx<=7;idx++){
+    promises.push(getWebSite(idx));
+}
+console.log(promises)
+
+//extract data
+
+Promise.all(promises).then(function(result){
+    let arrayofmyobj:Array<object> = result.map(x=>{return JSON.parse(x)})
+    for (var i = 0; i < arrayofmyobj.length; i++) {
+        var object:Array<object | any>= arrayofmyobj[i];
+        //console.log(object);
+        for (var j = 0; j < object.length; j++) {
+            var countries = object[j];
+            console.log(countries)
+            for(var k = 0; k<countries.length; k++){
+                 
+                if (countries[k].incomeLevel.value == 'Upper middle income') {
+                    console.log(`${countries[k].incomeLevel.value} : ${countries[k].name}`);
+            }
+        }
+    }
+}
+})
 /*var request = require("request");
 var userDetails;
 
@@ -109,41 +166,6 @@ function main(){
 main()
 */
 
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-require('source-map-support').install();
-
-const request = require("request");
-///////////////////////////////////////////////////////////////////////////////////////////
-
-//const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
-//const countryApiUrl = `${hostUrl}/countries?page=`+ page + "&format=JSON";
-
-
-
-function getWebSite(idx:number):Promise<string>{
-    return new Promise(function(resolve,reject){
-        let data:string = ''
-        const hostUrl:string = 'http://api.worldbank.org/v2/countries?page='+ idx + "&format=JSON";
-        request.get(hostUrl)
-        .on('response', (res:Response)=>{
-            //console.log(`HTTP Result = ${res.statusCode} ${res.statusMessage}`)
-        })
-        .on('data', (buf:Buffer)=>{
-            data += buf
-        })
-        .on('end', ()=>{
-            resolve(data)
-        })
-    })
-
-}
-
-    
-    
- getWebSite(1).then(function(result){
-     let object1 = JSON.parse(result)
-     console.log(object1);       
 
    
 /*
