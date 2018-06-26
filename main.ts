@@ -31,10 +31,11 @@ function getWebSite(idx:number):Promise<string>{
 
 }
 
+
     
 //Loop to use function    
 let promises:Array<Promise<string>> = [];
-for(var idx:number =1; idx<=7;idx++){
+for(var idx:number =1; idx<=10;idx++){
     promises.push(getWebSite(idx));
 }
 console.log(promises)
@@ -45,16 +46,22 @@ Promise.all(promises).then(function(result){
     let arrayofmyobj:Array<object> = result.map(x=>{return JSON.parse(x)})
     for (var i = 0; i < arrayofmyobj.length; i++) {
         var object:Array<object | any>= arrayofmyobj[i];
-        //console.log(object);
+       // console.log(object);
         for (var j = 0; j < object.length; j++) {
             var countries = object[j];
-            console.log(countries)
+           // console.log(countries)
+            //console.log(countries.page)
+            if(countries.page>countries.pages){
+               return process.exit
+            }
+            else{
             for(var k = 0; k<countries.length; k++){
                  
                 if (countries[k].incomeLevel.value == 'Upper middle income') {
                     console.log(`${countries[k].incomeLevel.value} : ${countries[k].name}`);
             }
         }
+    }
     }
 }
 })
