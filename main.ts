@@ -1,6 +1,7 @@
 import { url } from "inspector";
 import { error } from "util";
 import { Buffer } from "buffer";
+import { resolve } from "path";
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install();
@@ -35,14 +36,24 @@ function getWebSite(idx:number):Promise<string>{
     
 //Loop to use function    
 let promises:Array<Promise<string>> = [];
-for(var idx:number =1; idx<=10;idx++){
+for(let idx:number =1 ; idx<=10;idx++){
     promises.push(getWebSite(idx));
 }
 console.log(promises)
+Promise.all(promises).then(function(results){
+    return results.map(x=>{return JSON.parse(x)}).filter(val=>val[0].page<=val[0].pages)}).then(objects=>{
+        console.log(objects)
+        objects.reduce((total,amount)=>{
+            console.log(total.concat(amount))
+            
+        })
+    })
 
-//extract data
 
-Promise.all(promises).then(function(result){
+/*
+Promise.all(promises).then(function(results){
+
+    return results.filter(elem=> elem[1])
     let arrayofmyobj:Array<object> = result.map(x=>{return JSON.parse(x)})
     for (var i = 0; i < arrayofmyobj.length; i++) {
         var object:Array<object | any>= arrayofmyobj[i];
