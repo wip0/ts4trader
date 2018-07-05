@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install();
 
 const request = require("request");
+const incomeValue = "High income"
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 //const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
@@ -39,15 +40,34 @@ let promises:Array<Promise<string>> = [];
 for(let idx:number =1 ; idx<=10;idx++){
     promises.push(getWebSite(idx));
 }
-console.log(promises)
-Promise.all(promises).then(function(results){
-    return results.map(x=>{return JSON.parse(x)}).filter(val=>val[0].page<=val[0].pages)}).then(objects=>{
-        console.log(objects)
-        objects.reduce((total,amount)=>{
-            console.log(total.concat(amount))
+
+Promise.all(promises).then(results=>{
+    return results.map(stringData=>{return JSON.parse(stringData)
+        }).filter(array=>array[0].page<=array[0].pages)
+        }).then(objects=>{
+
+            const data:Array<object> = objects.map(array=>{return array[1]
+                }).reduce((total,members)=>{
+                    return total.concat(members)
             
+                }).filter(countries=>{
+                    countries.incomeLevel == incomeValue
+                    console.log(`${incomeValue} : ${countries.name}`)
         })
+            console.log(data)
+       
+})
+            
+        
+        
+        
+        
+        //const flat = objects.reduce((total,amount)=>{
+          //  return total.concat(amount)           
+        })
+      //  console.log(flat[1][1].incomeLevel.value)
     })
+    
 
 
 /*
