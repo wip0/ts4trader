@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install();
 
 const request = require("request");
-const incomeValue = "High income"
+const incomeValue = 'Upper middle income'
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 //const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
@@ -46,27 +46,20 @@ Promise.all(promises).then(results=>{
         }).filter(array=>array[0].page<=array[0].pages)
         }).then(objects=>{
 
-            const data:Array<object> = objects.map(array=>{return array[1]
+            return objects.map(array=>{return array[1]
                 }).reduce((total,members)=>{
                     return total.concat(members)
+                })
             
-                }).filter(countries=>{
-                    countries.incomeLevel == incomeValue
-                    console.log(`${incomeValue} : ${countries.name}`)
-        })
-            console.log(data)
+                .filter(countries=>{countries.incomeLevel == incomeValue
+                
+                })
+                
+            
+            
        
-})
+}).then(data=>{console.log(data)})
             
-        
-        
-        
-        
-        //const flat = objects.reduce((total,amount)=>{
-          //  return total.concat(amount)           
-        })
-      //  console.log(flat[1][1].incomeLevel.value)
-    })
     
 
 
