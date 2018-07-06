@@ -45,20 +45,15 @@ Promise.all(promises).then(results=>{
     return results.map(stringData=>{return JSON.parse(stringData)
         }).filter(array=>array[0].page<=array[0].pages)
         }).then(objects=>{
-
             return objects.map(array=>{return array[1]
                 }).reduce((total,members)=>{
                     return total.concat(members)
-                })
-            
-                .filter(countries=>{countries.incomeLevel == incomeValue
-                
-                })
-                
-            
+                }).filter(listOfCountries=>{return listOfCountries.incomeLevel.value == incomeValue
+                }).forEach(countries=>{console.log(`${incomeValue} : ${countries.name}`)})
+           
             
        
-}).then(data=>{console.log(data)})
+})
             
     
 
