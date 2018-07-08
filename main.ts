@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('source-map-support').install();
 
 const request = require("request");
-const incomeValue = 'Upper middle income'
+const incomeValue = 'High income'
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 //const hostUrl = 'http://api.worldbank.org/v2/countries?page='+ page + "&format=JSON";
@@ -42,18 +42,15 @@ for(let idx:number =1 ; idx<=10;idx++){
 }
 
 Promise.all(promises).then(results=>{
-    return results.map(stringData=>{return JSON.parse(stringData)
-        }).filter(array=>array[0].page<=array[0].pages)
-        .map(array=>{return array[1]
-                }).reduce((total,members)=>{
-                    return total.concat(members)
-                        }).filter(listOfCountries=>{return listOfCountries.incomeLevel.value == incomeValue
-                        }).forEach(countries=>{console.log(`${incomeValue} : ${countries.name}`)})
-           
-})
-            
-    
-
+    return results.map(stringData=>{return JSON.parse(stringData)})
+        .filter(array=>array[0].page<=array[0].pages)
+        .map(array=>{return array[1]})
+        .reduce((total,members)=>{return total.concat(members)})
+        .filter(listOfCountries=>{return listOfCountries.incomeLevel.value == incomeValue})
+        }).then(outs=>outs.forEach(countries=> {console.log(`${incomeValue} : ${countries.name}`)
+    }))
+                        
+     
 
 /*
 Promise.all(promises).then(function(results){
