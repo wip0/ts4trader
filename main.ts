@@ -37,18 +37,48 @@ function getWebSite(idx:number):Promise<string>{
     
 //Loop to use function    
 let promises:Array<Promise<string>> = [];
-for(let idx:number =1 ; idx<=10;idx++){
+for(let idx:number =1 ; idx<=2;idx++){
     promises.push(getWebSite(idx));
 }
 
-Promise.all(promises).then(results=>{
-    return results.map(stringData=>{return JSON.parse(stringData)})
-        .filter(array=>array[0].page<=array[0].pages)
-        .map(array=>{return array[1]})
-        .reduce((total,members)=>{return total.concat(members)})
-        .filter(listOfCountries=>{return listOfCountries.incomeLevel.value == incomeValue})
-        }).then(outs=>outs.forEach(countries=> {console.log(`${incomeValue} : ${countries.name}`)
-    }))
+interface Page {
+    page: number;
+    pages: number;
+    per_page: string;
+    total: number;
+}
+
+interface Country {
+    id: string;
+    name: string;
+    iso2Code: string;
+    incomeLevel: { id: string, iso2code: string, value: string };
+}
+
+interface CountryPage {
+    page: Page;
+    countries: Country[];
+}
+
+Promise.all(promises).then((outs) => {
+    const results: CountryPage[] = outs.map((s) => JSON.parse(s));
+    const arCountries = results.filter((cp) => cp.page.page <= cp.page.pages).map((cp) => cp.countries);
+    const countries = arCountries.reduce((prev, curr) => prev.concat(curr), []);
+    const outputs = countries.filter((c) => c.incomeLevel.value === incomeValue);
+    return outputs;
+}).then((outs) => {
+    outs.forEach((c) => {
+        console.log(`${incomeValue} : ${c.name}`);
+    });
+});
+    // return results.map(stringData=>{return JSON.parse(stringData)})
+    //     .filter(array=>array[0].page<=array[0].pages)
+    //     .map(array=>{return array[1]})
+    //     .reduce((total,members)=>{return total.concat(members)})
+    //     .filter(listOfCountries=>{return listOfCountries.incomeLevel.value == incomeValue})
+    //     }).then(outs=>outs.forEach(countries=> {console.log(`${incomeValue} : ${countries.name}`)
+    // }))
+// });
                         
      
 
